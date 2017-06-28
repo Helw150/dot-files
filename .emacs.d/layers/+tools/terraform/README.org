@@ -1,0 +1,27 @@
+#+TITLE: Terraform layer
+
+[[file:img/terraform.png]]
+
+* Table of Contents                                         :TOC_4_gh:noexport:
+- [[#description][Description]]
+- [[#install][Install]]
+- [[#configuration][Configuration]]
+  - [[#auto-format-on-save][Auto-format on save]]
+
+* Description
+This layer provides syntax support for Terraform =.tf= files using
+[[https://github.com/syohex/emacs-terraform-mode][terraform-mode]].
+
+* Install
+To use this configuration layer, add it to your =~/.spacemacs=. You will need to
+add =terraform= to the existing =dotspacemacs-configuration-layers= list in this
+file.
+
+* Configuration
+** Auto-format on save
+If you want =terraform fmt= to be applied automatically on save then set the
+layer variable =terraform-auto-format-on-save= to =t=:
+
+#+begin_src emacs-lisp
+  (terraform :variables terraform-auto-format-on-save t)
+#+end_src
