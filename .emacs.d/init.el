@@ -6,12 +6,21 @@
    ;; '("melpa" . "http://stable.melpa.org/packages/") ; many packages won't show if using stable
    '("melpa" . "http://melpa.milkbox.net/packages/")
    t))
+(package-initialize)  ;load and activate packages, including auto-complete
+
+;; Autocomplete active
+(ac-config-default)
+(global-auto-complete-mode t)
+
 
 ;; General Emacs Settings
 (setq c-basic-offset 4) ; indents 4 chars
 (setq tab-width 4)          ; and 4 char wide for TAB
 (setq indent-tabs-mode nil) ; And force use of spaces
 (setq inhibit-startup-screen t)
+(global-linum-mode 1)
+
+;; Auto-Complete
 
 ;; Flycheck
 (add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))

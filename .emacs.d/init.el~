@@ -12,6 +12,11 @@
 (setq tab-width 4)          ; and 4 char wide for TAB
 (setq indent-tabs-mode nil) ; And force use of spaces
 (setq inhibit-startup-screen t)
+(global-linum-mode 1)
+
+;; Auto-Complete
+(require 'auto-complete)
+(global-auto-complete-mode t)
 
 ;; Flycheck
 (add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
@@ -33,7 +38,3 @@
 
 ;; Setting up Zenburn Theme
 (add-hook 'after-init-hook (lambda () (load-theme 'zenburn t)))
-
-;; Emacs Copy Past
-(load "~/.emacs.d/osc52e")
-(require 'osc52e)
