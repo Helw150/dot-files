@@ -1,3 +1,4 @@
+(setq package-list '(zenburn-theme auto-complete counsel hlinum web-mode))
 ;; load emacs 24's package system. Add MELPA repository.
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -7,6 +8,15 @@
    '("melpa" . "http://melpa.milkbox.net/packages/")
    t))
 (package-initialize)  ;load and activate packages, including auto-complete
+
+;; fetch the list of packages available
+(unless package-archive-contents
+  (package-refresh-contents))
+
+;; install the missing packages
+(dolist (package package-list)
+  (unless (package-installed-p package)
+        (package-install package)))
 
 ;; Autocomplete active
 (ac-config-default)
