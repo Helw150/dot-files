@@ -60,6 +60,5 @@
 (setq web-mode-content-types-alist
       '(("jsx" . "\\.js[x]?\\'")))
 
-
 ;; Setting up Zenburn Theme
 (add-hook 'after-init-hook (lambda () (load-theme 'zenburn t)))
