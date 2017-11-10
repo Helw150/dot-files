@@ -1,0 +1,9 @@
+IdentityFile ~/.ssh/chronos
+IdentityFile ~/.ssh/ghost
+
+Host fake-news
+     HostName 165.227.79.169
+     IdentityFile ~/.ssh/ghost
+Host cims
+     HostName access.cims.nyu.edu
+     User wbh230
