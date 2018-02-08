@@ -70,5 +70,12 @@
 (setq web-mode-content-types-alist
       '(("jsx" . "\\.js[x]?\\'")))
 
+;; Use Web-Mode JSX for all js or jsx files
+(setq scala-mode-content-types-alist
+      '(("sc" . "\\.sc[ala]?\\'")))
+
+;; Use Scala mode for .sc files
+(add-to-list 'auto-mode-alist '("\\.sc\\'" . scala-mode))
+
 ;; Setting up Zenburn Theme
 (add-hook 'after-init-hook (lambda () (load-theme 'zenburn t)))
