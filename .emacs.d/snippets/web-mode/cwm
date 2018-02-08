@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: create-react-component-will-mount
+# key: cwm
+# --
+componentWillMount(){
+    $0
+}

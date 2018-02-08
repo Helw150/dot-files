@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: create-react-function-class
+# key: ccf
+# --
+const $1 = ($2) => {
+    $3      
+}

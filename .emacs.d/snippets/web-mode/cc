@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: create-react-class
+# key: cc
+# --
+class $1 extends Component{
+      $2
+}

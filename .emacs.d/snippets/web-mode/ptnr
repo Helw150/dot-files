@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: create-react-prop-type-number-required
+# key: ptnr
+# --
+PropTypes.number.isRequired

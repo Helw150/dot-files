@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: create-react-constructor
+# key: ccr
+# --
+constructor(props){
+    super(props);
+    $0
+}

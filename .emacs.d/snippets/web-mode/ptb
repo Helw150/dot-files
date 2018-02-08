@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: create-react-prop-type-bool
+# key: ptb
+# --
+PropTypes.bool

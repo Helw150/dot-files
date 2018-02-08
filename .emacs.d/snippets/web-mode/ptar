@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: create-react-prop-type-array-required
+# key: ptar
+# --
+PropTypes.array.isRequired

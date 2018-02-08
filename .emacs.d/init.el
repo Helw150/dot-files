@@ -62,12 +62,9 @@
 (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
 
 ;; Use Web-Mode JSX for all js or jsx files
-(setq web-mode-content-types-alist
-      '(("jsx" . "\\.js[x]?\\'")))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
 
-;; Use Web-Mode JSX for all js or jsx files
-(setq scala-mode-content-types-alist
-      '(("sc" . "\\.sc[ala]?\\'")))
 
 ;; Use Scala mode for .sc files
 (add-to-list 'auto-mode-alist '("\\.sc\\'" . scala-mode))
