@@ -1,4 +1,4 @@
-(setq package-list '(zenburn-theme auto-complete ivy swiper counsel hlinum web-mode))
+(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode))
 ;; load emacs 24's package system. Add MELPA repository.
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -17,11 +17,6 @@
 (dolist (package package-list)
   (unless (package-installed-p package)
         (package-install package)))
-
-;; Autocomplete active
-(ac-config-default)
-(global-auto-complete-mode t)
-
 
 ;; General Emacs Settings
 (setq c-basic-offset 4) ; indents 4 chars
@@ -79,3 +74,17 @@
 
 ;; Setting up Zenburn Theme
 (add-hook 'after-init-hook (lambda () (load-theme 'zenburn t)))
+
+;; Yasnippets
+(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+(setq yas/indent-line nil)
+(yas-global-mode 1)
+
+;; Company Abbreviation in the window using dabbrev and Yasnippets search with company
+(add-hook 'after-init-hook 'global-company-mode)
+(with-eval-after-load 'company
+  (add-to-list 'company-backends '(company-dabbrev-code))
+  (setq company-tooltip-limit 20)                      ; bigger popup window
+  (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
+  (global-set-key (kbd "C-<down>") 'company-yasnippet)
+  )
