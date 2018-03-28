@@ -1,5 +1,8 @@
-# Colorful fortunes upon login
-fortune | cowsay -f $(ls /usr/share/cowsay/cows/ | shuf -n1) | lolcat
+# Colorful fortunes upon login if the shell is interactive
+# If you don't check interactive it breaks scp
+case "$-" in
+    *)	fortune | cowsay -f $(ls /usr/share/cowsay/cows/ | shuf -n1) | lolcat;;
+esac
 
 alias emacs='emacs -nw'
 alias python=python3
