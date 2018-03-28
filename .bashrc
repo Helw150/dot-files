@@ -1,8 +1,13 @@
+# If not running interactively, don't do anything
+# prevents RC from breaking non-interactive commands
+# like SCP
+case $- in
+    *i*) ;;
+    *) return;;
+esac 
+
 # Colorful fortunes upon login if the shell is interactive
-# If you don't check interactive it breaks scp
-case "$-" in
-    *)	fortune | cowsay -f $(ls /usr/share/cowsay/cows/ | shuf -n1) | lolcat;;
-esac
+fortune | cowsay -f $(ls /usr/share/cowsay/cows/ | shuf -n1) | lolcat;;
 
 alias emacs='emacs -nw'
 alias python=python3
