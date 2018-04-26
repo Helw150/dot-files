@@ -1,4 +1,4 @@
-(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode))
+(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode xclip))
 ;; load emacs 24's package system. Add MELPA repository.
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -48,6 +48,9 @@
 (set-face-attribute 'linum-highlight-face nil :weight 'bold :background "#4C4C4C" :foreground "#9FC59F")
 (set-face-attribute 'linum nil :foreground "#537953")
 
+;; Sync terminal and system clipboard
+(xclip-mode 1)
+
 ;; Flycheck
 (add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
 
@@ -83,5 +86,6 @@
   (add-to-list 'company-backends '(company-dabbrev-code))
   (setq company-tooltip-limit 20)                      ; bigger popup window
   (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
-  (global-set-key (kbd "C-<down>") 'company-yasnippet)
+  (global-set-key (kbd "M-/") 'company-yasnippet)
   )
+
