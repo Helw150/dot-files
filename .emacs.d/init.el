@@ -1,4 +1,4 @@
-(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode xclip))
+(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode xclip py-yapf prettier-js add-node-modules-path))
 ;; load emacs 24's package system. Add MELPA repository.
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -40,6 +40,9 @@
 ;; 4 Digits accounted for with Left Justification
 (setq linum-format "%-4d\u2502 ")
 
+;; Beautify Python on save
+(add-hook 'python-mode-hook 'py-yapf-enable-on-save)
+
 ;; Wrap text
 (global-visual-line-mode 1)
 
@@ -67,7 +70,13 @@
 ;; Use Web-Mode JSX for all js or jsx files
 (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
-
+(setq web-mode-markup-indent-offset 2
+      web-mode-css-indent-offset 2
+      web-mode-code-indent-offset 2)
+(eval-after-load 'web-mode
+  '(progn
+     (add-hook 'web-mode-hook #'add-node-modules-path)
+          (add-hook 'web-mode-hook #'prettier-js-mode)))   
 
 ;; Use Scala mode for .sc files
 (add-to-list 'auto-mode-alist '("\\.sc\\'" . scala-mode))
