@@ -1,4 +1,4 @@
-(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode xclip py-yapf prettier-js add-node-modules-path))
+(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode xclip py-yapf prettier-js add-node-modules-path ensime scala-mode sbt-mode))
 ;; load emacs 24's package system. Add MELPA repository.
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -80,6 +80,10 @@
 
 ;; Use Scala mode for .sc files
 (add-to-list 'auto-mode-alist '("\\.sc\\'" . scala-mode))
+(add-to-list 'auto-mode-alist '("\\.scala\\'" . scala-mode))
+
+;; Use Scala mode for .sbt files
+(add-to-list 'auto-mode-alist '("\\.sbt\\'" . scala-mode))
 
 ;; Setting up Zenburn Theme
 (add-hook 'after-init-hook (lambda () (load-theme 'zenburn t)))
