@@ -1,10 +1,10 @@
-(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode xclip py-yapf prettier-js add-node-modules-path ensime scala-mode sbt-mode multiple-cursors key-chord))
+(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode xclip py-yapf prettier-js add-node-modules-path ensime scala-mode sbt-mode multiple-cursors key-chord expand-region))
 ;; load emacs 24's package system. Add MELPA repository.
 (when (>= emacs-major-version 24)
   (require 'package)
   (add-to-list
    'package-archives
-   ;; '("melpa" . "http://stable.melpa.org/packages/") ; many packages won't show if using stable
+   ;;'("melpa" . "http://stable.melpa.org/packages/") ; many packages won't show if using stable
    '("melpa" . "http://melpa.milkbox.net/packages/")
    t))
 (package-initialize)  ;load and activate packages, including auto-complete
@@ -27,7 +27,12 @@
 ;; Multi-Cursor Using Key Chord
 (key-chord-mode +1)
 (key-chord-define-global "ss"     'mc/edit-lines)
+(key-chord-define-global "sn"     'mc/mark-next-like-this)
+(key-chord-define-global "sp"     'mc/mark-previous-like-this)
+(key-chord-define-global "sa"     'mc/mark-all-like-this)
 
+;; Expand region key chord
+(key-chord-define-global "ee" 'er/expand-region)
 
 ;; Highlight current lines
 (global-hl-line-mode t)
