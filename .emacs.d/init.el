@@ -1,4 +1,4 @@
-(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode xclip py-yapf prettier-js add-node-modules-path ensime scala-mode sbt-mode multiple-cursors key-chord expand-region))
+(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode py-yapf prettier-js add-node-modules-path ensime scala-mode sbt-mode multiple-cursors key-chord expand-region projectile magit))
 ;; load emacs 24's package system. Add MELPA repository.
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -23,13 +23,22 @@
 (setq tab-width 4)          ; and 4 char wide for TAB
 (setq indent-tabs-mode nil) ; And force use of spaces
 (setq inhibit-startup-screen t)
+(global-set-key (kbd "C-x g") 'magit-status)
+
+;; Project Management with Projectile
+(projectile-mode +1)
+(setq projectile-completion-system 'ivy)
+(setq projectile-enable-caching t)
+(key-chord-define-global "pp"     'projectile-find-file)
 
 ;; Multi-Cursor Using Key Chord
 (key-chord-mode +1)
+(setq key-chord-two-keys-delay 0.75) ; default 0.1
+(setq key-chord-one-key-delay 0.175) ; default 0.2
 (key-chord-define-global "ss"     'mc/edit-lines)
-(key-chord-define-global "sn"     'mc/mark-next-like-this)
-(key-chord-define-global "sp"     'mc/mark-previous-like-this)
-(key-chord-define-global "sa"     'mc/mark-all-like-this)
+(key-chord-define-global "s]"     'mc/mark-next-like-this)
+(key-chord-define-global "s["     'mc/mark-previous-like-this)
+(key-chord-define-global "s'"     'mc/mark-all-like-this)
 
 ;; Expand region key chord
 (key-chord-define-global "ee" 'er/expand-region)
@@ -60,9 +69,6 @@
 (set-face-attribute 'hl-line nil :background "#4C4C4C")
 (set-face-attribute 'linum-highlight-face nil :weight 'bold :background "#4C4C4C" :foreground "#9FC59F")
 (set-face-attribute 'linum nil :foreground "#537953")
-
-;; Sync terminal and system clipboard
-(xclip-mode 1)
 
 ;; Flycheck
 (add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
