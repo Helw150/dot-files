@@ -7,7 +7,7 @@ case $- in
 esac 
 
 # Colorful fortunes upon login if the shell is interactive
-fortune | cowsay -f $(ls /usr/share/cowsay/cows/ | shuf -n1) | lolcat;;
+fortune | cowsay -f $(ls /usr/share/cowsay/cows/ | shuf -n1) | lolcat
 
 alias emacs='emacs -nw'
 alias python=python3
@@ -15,6 +15,8 @@ alias pip=pip3
 alias tunnel=./.scripts/QuickTunnel.sh
 alias session="tmux new -s \$1"
 alias workon="tmux attach -t \$1"
+alias emacs="emacs -nw"
+alias ls='ls --color=auto'
 
 # Defer initialization of nvm until nvm, node or a node-dependent command is
 if [ -s "$HOME/.nvm/nvm.sh" ]; then

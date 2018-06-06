@@ -1,4 +1,4 @@
-(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode xclip py-yapf prettier-js add-node-modules-path ensime scala-mode sbt-mode))
+(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode xclip py-yapf prettier-js add-node-modules-path ensime scala-mode sbt-mode multiple-cursors key-chord))
 ;; load emacs 24's package system. Add MELPA repository.
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -23,6 +23,11 @@
 (setq tab-width 4)          ; and 4 char wide for TAB
 (setq indent-tabs-mode nil) ; And force use of spaces
 (setq inhibit-startup-screen t)
+
+;; Multi-Cursor Using Key Chord
+(key-chord-mode +1)
+(key-chord-define-global "ss"     'mc/edit-lines)
+
 
 ;; Highlight current lines
 (global-hl-line-mode t)
