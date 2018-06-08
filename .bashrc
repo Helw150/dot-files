@@ -15,14 +15,29 @@ fi
 # Colorful fortunes upon login if the shell is interactive
 fortune | cowsay -f $(ls /usr/share/cowsay/cows/ | shuf -n1) | lolcat
 
+# Emacs without GUI
 alias emacs='emacs -nw'
+
+# Hack to make python 3
 alias python=python3
 alias pip=pip3
+
+# Quickly make a reverse tunnel
 alias tunnel=./.scripts/QuickTunnel.sh
-alias session="tmux new -s \$1"
-alias workon="tmux attach -t \$1"
-alias emacs="emacs -nw"
+
+# Alias to wrap connecting and creating tmux workspaces
+workon() {
+    tmux new -s $@ || tmux attach -t $@
+}
+
+# LS Aliases
 alias ls='ls --color=auto'
+alias tls="tmux list-sessions"
+alias hls="hadoop fs -ls"
+
+# Totally insecure and convenient notebook
+alias jn='scripts/jupyter/run.sh notebook --NotebookApp.ip='*' --NotebookApp.password='' --NotebookApp.token='' --notebook-dir=~/notebooks/'
+
 
 # Defer initialization of nvm until nvm, node or a node-dependent command is
 if [ -s "$HOME/.nvm/nvm.sh" ]; then

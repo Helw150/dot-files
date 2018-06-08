@@ -1,4 +1,7 @@
-(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode py-yapf prettier-js add-node-modules-path ensime scala-mode sbt-mode multiple-cursors key-chord expand-region projectile magit))
+;; I'm using CLI 99% of the time - Get the menu bar out of my face
+(menu-bar-mode -1)
+
+(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode py-yapf prettier-js add-node-modules-path ensime scala-mode sbt-mode multiple-cursors key-chord expand-region projectile magit ace-jump-mode))
 ;; load emacs 24's package system. Add MELPA repository.
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -24,6 +27,10 @@
 (setq indent-tabs-mode nil) ; And force use of spaces
 (setq inhibit-startup-screen t)
 (global-set-key (kbd "C-x g") 'magit-status)
+(setq magit-completing-read-function 'ivy-completing-read)
+
+;; JUMP AROUND
+(key-chord-define-global "we"     'ace-jump-mode)
 
 ;; Project Management with Projectile
 (projectile-mode +1)
@@ -31,17 +38,20 @@
 (setq projectile-enable-caching t)
 (key-chord-define-global "pp"     'projectile-find-file)
 
+;; Macro Keybindings
+(key-chord-define-global ">>"     'forward-word)
+(key-chord-define-global "<<"     'backward-word)
+
+
 ;; Multi-Cursor Using Key Chord
 (key-chord-mode +1)
-(setq key-chord-two-keys-delay 0.75) ; default 0.1
-(setq key-chord-one-key-delay 0.175) ; default 0.2
 (key-chord-define-global "ss"     'mc/edit-lines)
 (key-chord-define-global "s]"     'mc/mark-next-like-this)
 (key-chord-define-global "s["     'mc/mark-previous-like-this)
 (key-chord-define-global "s'"     'mc/mark-all-like-this)
 
 ;; Expand region key chord
-(key-chord-define-global "ee" 'er/expand-region)
+(key-chord-define-global "``" 'er/expand-region)
 
 ;; Highlight current lines
 (global-hl-line-mode t)
@@ -50,8 +60,6 @@
 ;; Highlight matching parens
 (show-paren-mode 1)
 
-;; I'm using CLI 99% of the time - Get the menu bar out of my face
-(menu-bar-mode -1)
 
 ;; Always show line numbers
 (global-linum-mode t)
