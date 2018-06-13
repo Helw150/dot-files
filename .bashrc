@@ -16,7 +16,7 @@ fi
 fortune | cowsay -f $(ls /usr/share/cowsay/cows/ | shuf -n1) | lolcat
 
 # Emacs without GUI
-alias emacs='emacs -nw'
+alias emacs='emacsclient -nw -t'
 
 # Hack to make python 3
 alias python=python3
