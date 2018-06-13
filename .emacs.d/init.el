@@ -29,9 +29,9 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 (setq magit-completing-read-function 'ivy-completing-read)
 
-;; Reason Mode Auto Prettify                                                                                                                                                                        
-(add-hook 'reason-mode-hook (lambda ()                                                                                                                                                              
-          (add-hook 'before-save-hook 'refmt-before-save)))    
+;; Reason Mode Auto Prettify
+(add-hook 'reason-mode-hook (lambda ()
+          (add-hook 'before-save-hook 'refmt-before-save)))
 
 ;; JUMP AROUND
 (key-chord-define-global "we"     'ace-jump-mode)
@@ -40,7 +40,6 @@
 (projectile-mode +1)
 (setq projectile-completion-system 'ivy)
 (setq projectile-enable-caching t)
-(key-chord-define-global "pp"     'projectile-find-file)
 
 ;; Macro Keybindings
 (key-chord-define-global ">>"     'forward-word)
@@ -49,10 +48,10 @@
 
 ;; Multi-Cursor Using Key Chord
 (key-chord-mode +1)
-(key-chord-define-global "ss"     'mc/edit-lines)
-(key-chord-define-global "s]"     'mc/mark-next-like-this)
-(key-chord-define-global "s["     'mc/mark-previous-like-this)
-(key-chord-define-global "s'"     'mc/mark-all-like-this)
+(key-chord-define-global "es"     'mc/edit-lines)
+(key-chord-define-global "e]"     'mc/mark-next-like-this)
+(key-chord-define-global "e["     'mc/mark-previous-like-this)
+(key-chord-define-global "ea"     'mc/mark-all-like-this)
 
 ;; Expand region key chord
 (key-chord-define-global "``" 'er/expand-region)
@@ -129,18 +128,3 @@
   (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
   (global-set-key (kbd "M-/") 'company-yasnippet)
   )
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (ace-jump-mode magit zenburn-theme xclip web-mode py-yapf projectile prettier-js multiple-cursors key-chord hlinum expand-region ensime counsel add-node-modules-path))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
