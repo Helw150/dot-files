@@ -6,9 +6,16 @@ case $- in
     *) return;;
 esac 
 
+if ! ssh-add -l >/dev/null; then
+    eval `ssh-agent`
+    ssh-add ~/.ssh/id_rsa
+    ssh-add ~/.ssh/will_held
+fi
+
 # Fancy Bash Prompt
 if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
   __GIT_PROMPT_DIR=$(brew --prefix)/opt/bash-git-prompt/share
+  GIT_PROMPT_ONLY_IN_REPO=1
   source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
 fi
 
@@ -16,7 +23,7 @@ fi
 fortune | cowsay -f $(ls /usr/share/cowsay/cows/ | shuf -n1) | lolcat
 
 # Emacs without GUI
-alias emacs='emacsclient -nw -t'
+alias emacs='emacs -nw'
 
 # Hack to make python 3
 alias python=python3
