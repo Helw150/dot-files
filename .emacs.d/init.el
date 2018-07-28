@@ -1,7 +1,7 @@
 ;; I'm using CLI 99% of the time - Get the menu bar out of my face
 (menu-bar-mode -1)
 
-(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode py-yapf prettier-js add-node-modules-path ensime scala-mode sbt-mode multiple-cursors key-chord expand-region projectile magit ace-jump-mode reason-mode))
+(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode prettier-js add-node-modules-path ensime scala-mode sbt-mode multiple-cursors key-chord expand-region projectile magit ace-jump-mode reason-mode))
 ;; load emacs 24's package system. Add MELPA repository.
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -71,7 +71,24 @@
 (setq linum-format "%-4d\u2502 ")
 
 ;; Beautify Python on save
-(add-hook 'python-mode-hook 'py-yapf-enable-on-save)
+(defcustom python-yapf-path (executable-find "yapf")
+  "yapf executable path."
+  :group 'python
+  :type 'string)
+
+(defun python-yapf ()
+    "Automatically formats Python code to conform to the PEP 8 style guide.
+$ yapf --in-place <filename>"
+    (interactive)
+    (when (eq major-mode 'python-mode)
+      (shell-command
+       (format "%s --in-place %s" python-yapf-path
+               (shell-quote-argument (buffer-file-name))))
+      (revert-buffer t t t)))
+
+(eval-after-load 'python
+  '(if python-yapf-path
+              (add-hook 'after-save-hook 'python-yapf)))
 
 ;; Wrap text
 (global-visual-line-mode 1)
