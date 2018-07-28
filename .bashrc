@@ -12,13 +12,6 @@ if ! ssh-add -l >/dev/null; then
     ssh-add ~/.ssh/will_held
 fi
 
-# Fancy Bash Prompt
-if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
-  __GIT_PROMPT_DIR=$(brew --prefix)/opt/bash-git-prompt/share
-  GIT_PROMPT_ONLY_IN_REPO=1
-  source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
-fi
-
 # Colorful fortunes upon login if the shell is interactive
 fortune | cowsay -f $(ls /usr/share/cowsay/cows/ | shuf -n1) | lolcat
 
@@ -69,3 +62,7 @@ HISTFILESIZE=2000
 git config --global user.name "Helw150"
 git config --global user.email wbh230@nyu.edu
 export TERM=xterm-256color
+
+GIT_PROMPT_ONLY_IN_REPO=1
+GIT_PROMPT_THEME=Solarized_Ubuntu
+source ~/dot-files/bash-git-prompt/gitprompt.sh
