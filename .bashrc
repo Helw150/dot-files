@@ -66,3 +66,8 @@ export TERM=xterm-256color
 GIT_PROMPT_ONLY_IN_REPO=1
 GIT_PROMPT_THEME=Solarized_Ubuntu
 source ~/dot-files/bash-git-prompt/gitprompt.sh
+
+if [ -d "~/miniconda3/" ]; then
+. ~/miniconda3/etc/profile.d/conda.sh
+conda activate
+fi
