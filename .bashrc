@@ -9,7 +9,6 @@ esac
 if ! ssh-add -l >/dev/null; then
     eval `ssh-agent`
     ssh-add ~/.ssh/id_rsa
-    ssh-add ~/.ssh/will_held
 fi
 
 # Colorful fortunes upon login if the shell is interactive
@@ -17,10 +16,6 @@ fortune | cowsay -f $(ls /usr/share/cowsay/cows/ | shuf -n1) | lolcat
 
 # Emacs without GUI
 alias emacs='emacs -nw'
-
-# Hack to make python 3
-alias python=python3
-alias pip=pip3
 
 # Quickly make a reverse tunnel
 alias tunnel=./.scripts/QuickTunnel.sh

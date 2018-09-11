@@ -1,7 +1,7 @@
 ;; I'm using CLI 99% of the time - Get the menu bar out of my face
 (menu-bar-mode -1)
 
-(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode prettier-js add-node-modules-path ensime scala-mode sbt-mode multiple-cursors key-chord expand-region projectile magit ace-jump-mode reason-mode))
+(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode prettier-js add-node-modules-path ensime scala-mode sbt-mode multiple-cursors key-chord expand-region projectile magit ace-jump-mode reason-mode markdown-mode gh-md))
 ;; load emacs 24's package system. Add MELPA repository.
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -90,6 +90,16 @@ $ yapf --in-place <filename>"
   '(if python-yapf-path
               (add-hook 'after-save-hook 'python-yapf)))
 
+
+(defun render-md ()
+    "Renders Markdown in a Window Parallel to the Markdown using the Github API"
+    (interactive)
+    (when (eq major-mode 'markdown-mode)
+      (gh-md-render-buffer)))
+
+(eval-after-load 'markdown
+              (add-hook 'after-save-hook 'render-md))
+
 ;; Wrap text
 (global-visual-line-mode 1)
 
@@ -145,3 +155,17 @@ $ yapf --in-place <filename>"
   (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
   (global-set-key (kbd "M-/") 'company-yasnippet)
   )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (reason-mode ace-jump-mode magit zenburn-theme xclip web-mode py-yapf projectile prettier-js multiple-cursors key-chord hlinum expand-region ensime counsel add-node-modules-path))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
