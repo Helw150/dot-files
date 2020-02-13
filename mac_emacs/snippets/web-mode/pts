@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: create-react-prop-type-string
+# key: pts
+# --
+PropTypes.string

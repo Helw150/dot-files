@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: create-react-component-will-unmount
+# key: cwum
+# --
+componentWillUnmount(){
+    $0
+}

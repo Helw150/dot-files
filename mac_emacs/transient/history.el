@@ -1,0 +1,2 @@
+((magit-blame
+  ("-w")))

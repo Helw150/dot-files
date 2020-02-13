@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: create-react-component-will-update
+# key: cwu
+# --
+componentWillUpdate(){
+    $0
+}

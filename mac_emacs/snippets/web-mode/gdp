@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: get-get-default-props
+# key: gdp
+# --
+getDefaultProps(){
+    $0
+}

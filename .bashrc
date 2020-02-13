@@ -26,13 +26,15 @@ workon() {
 }
 
 # LS Aliases
-alias ls='ls --color=auto'
+alias ls="ls -G"
 alias tls="tmux list-sessions"
 alias hls="hadoop fs -ls"
 
 # Totally insecure and convenient notebook
 alias jn='scripts/jupyter/run.sh notebook --NotebookApp.ip='*' --NotebookApp.password='' --NotebookApp.token='' --notebook-dir=~/notebooks/'
 
+# Green
+alias llgreen="git fetch --all ; git rebase origin/master --autostash && git submodule update --init"
 
 # Defer initialization of nvm until nvm, node or a node-dependent command is
 if [ -s "$HOME/.nvm/nvm.sh" ]; then
@@ -60,9 +62,8 @@ export TERM=xterm-256color
 
 GIT_PROMPT_ONLY_IN_REPO=1
 GIT_PROMPT_THEME=Solarized_Ubuntu
-source ~/dot-files/bash-git-prompt/gitprompt.sh
-
 if [ -d "~/miniconda3/" ]; then
 . ~/miniconda3/etc/profile.d/conda.sh
 conda activate
 fi
+eval "$(starship init bash)"
