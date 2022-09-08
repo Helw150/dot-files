@@ -12,13 +12,10 @@ if ! ssh-add -l >/dev/null; then
 fi
 
 # Colorful fortunes upon login if the shell is interactive
-fortune | cowsay -f $(ls /usr/share/cowsay/cows/ | shuf -n1) | lolcat
+# fortune | cowsay -f $(ls /usr/share/cowsay/cows/ | shuf -n1) | lolcat
 
 # Emacs without GUI
 alias emacs='emacs -nw'
-
-# Quickly make a reverse tunnel
-alias tunnel=./.scripts/QuickTunnel.sh
 
 # Alias to wrap connecting and creating tmux workspaces
 workon() {
@@ -32,18 +29,6 @@ alias hls="hadoop fs -ls"
 
 # Totally insecure and convenient notebook
 alias jn='scripts/jupyter/run.sh notebook --NotebookApp.ip='*' --NotebookApp.password='' --NotebookApp.token='' --notebook-dir=~/notebooks/'
-
-# Green
-alias llgreen="git fetch --all ; git rebase origin/master --autostash && git submodule update --init"
-
-# Defer initialization of nvm until nvm, node or a node-dependent command is
-if [ -s "$HOME/.nvm/nvm.sh" ]; then
-    export NVM_DIR="$HOME/.nvm"
-    alias load_nvm='[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion" && unalias nvm node npm && . "$NVM_DIR"/nvm.sh'
-    alias nvm='load_nvm && nvm'
-    alias node='load_nvm && node'
-    alias npm='load_nvm && npm'
-fi
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options

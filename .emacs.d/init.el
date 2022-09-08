@@ -1,16 +1,12 @@
 ;; I'm using CLI 99% of the time - Get the menu bar out of my face
 (menu-bar-mode -1)
+(require 'package)
+;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+;; and `package-pinned-packages`. Most users will not need or want to do this.
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
 
-(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel hlinum web-mode prettier-js add-node-modules-path ensime scala-mode sbt-mode multiple-cursors key-chord expand-region projectile magit ace-jump-mode reason-mode markdown-mode gh-md))
-;; load emacs 24's package system. Add MELPA repository.
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (add-to-list
-   'package-archives
-   ;;'("melpa" . "http://stable.melpa.org/packages/") ; many packages won't show if using stable
-   '("melpa" . "http://melpa.milkbox.net/packages/")
-   t))
-(package-initialize)  ;load and activate packages, including auto-complete
+(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel multiple-cursors key-chord expand-region projectile magit ace-jump-mode reason-mode markdown-mode))
 
 ;; fetch the list of packages available
 (unless package-archive-contents
@@ -56,57 +52,16 @@
 ;; Expand region key chord
 (key-chord-define-global "``" 'er/expand-region)
 
-;; Highlight current lines
-(global-hl-line-mode t)
-(hlinum-activate)
-
 ;; Highlight matching parens
 (show-paren-mode 1)
-
-
-;; Always show line numbers
-(global-linum-mode t)
-
-;; 4 Digits accounted for with Left Justification
-(setq linum-format "%-4d\u2502 ")
-
-;; Beautify Python on save
-(defcustom python-yapf-path (executable-find "yapf")
-  "yapf executable path."
-  :group 'python
-  :type 'string)
-
-(defun python-yapf ()
-    "Automatically formats Python code to conform to the PEP 8 style guide.
-$ yapf --in-place <filename>"
-    (interactive)
-    (when (eq major-mode 'python-mode)
-      (shell-command
-       (format "%s --in-place %s" python-yapf-path
-               (shell-quote-argument (buffer-file-name))))
-      (revert-buffer t t t)))
-
-(eval-after-load 'python
-  '(if python-yapf-path
-              (add-hook 'after-save-hook 'python-yapf)))
-
-
-(defun render-md ()
-    "Renders Markdown in a Window Parallel to the Markdown using the Github API"
-    (interactive)
-    (when (eq major-mode 'markdown-mode)
-      (gh-md-render-buffer)))
-
-(eval-after-load 'markdown
-              (add-hook 'after-save-hook 'render-md))
 
 ;; Wrap text
 (global-visual-line-mode 1)
 
 ;; Highlights the present line with a very faint glow
-(set-face-attribute 'hl-line nil :background "#4C4C4C")
-(set-face-attribute 'linum-highlight-face nil :weight 'bold :background "#4C4C4C" :foreground "#9FC59F")
-(set-face-attribute 'linum nil :foreground "#537953")
+(global-display-line-numbers-mode t)
+(global-hl-line-mode t)
+(set-face-background 'hl-line "#4C4C4C")
 
 ;; Flycheck
 (add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
@@ -120,17 +75,6 @@ $ yapf --in-place <filename>"
 (global-set-key (kbd "<f1> l") 'counsel-find-library)
 (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
 (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
-
-;; Use Web-Mode JSX for all js or jsx files
-(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
-(setq web-mode-markup-indent-offset 2
-      web-mode-css-indent-offset 2
-      web-mode-code-indent-offset 2)
-(eval-after-load 'web-mode
-  '(progn
-     (add-hook 'web-mode-hook #'add-node-modules-path)
-          (add-hook 'web-mode-hook #'prettier-js-mode)))   
 
 ;; Use Scala mode for .sc files
 (add-to-list 'auto-mode-alist '("\\.sc\\'" . scala-mode))
@@ -162,7 +106,7 @@ $ yapf --in-place <filename>"
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (reason-mode ace-jump-mode magit zenburn-theme xclip web-mode py-yapf projectile prettier-js multiple-cursors key-chord hlinum expand-region ensime counsel add-node-modules-path))))
+    (reason-mode ace-jump-mode magit zenburn-theme xclip web-mode py-yapf projectile prettier-js multiple-cursors key-chord expand-region ensime counsel add-node-modules-path))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
