@@ -6,7 +6,7 @@
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
-(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel multiple-cursors key-chord expand-region projectile magit ace-jump-mode reason-mode markdown-mode))
+(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel multiple-cursors key-chord expand-region projectile magit ace-jump-mode reason-mode markdown-mode python-black use-package))
 
 ;; fetch the list of packages available
 (unless package-archive-contents
@@ -25,9 +25,11 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 (setq magit-completing-read-function 'ivy-completing-read)
 
-;; Reason Mode Auto Prettify
-(add-hook 'reason-mode-hook (lambda ()
-          (add-hook 'before-save-hook 'refmt-before-save)))
+(use-package python-black
+  :demand t
+  :hook
+  (python-mode . python-black-on-save-mode)
+  :after python)
 
 ;; JUMP AROUND
 (key-chord-define-global "we"     'ace-jump-mode)
