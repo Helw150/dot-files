@@ -6,7 +6,8 @@
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
-(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel multiple-cursors key-chord expand-region projectile magit ace-jump-mode reason-mode markdown-mode python-black use-package))
+(setq package-list '(zenburn-theme company yasnippet ivy swiper counsel multiple-cursors key-chord expand-region projectile magit ace-jump-mode reason-mode markdown-mode ruff-format use-package))
+
 
 ;; fetch the list of packages available
 (unless package-archive-contents
@@ -38,11 +39,11 @@
 (projectile-mode +1)
 (setq projectile-completion-system 'ivy)
 (setq projectile-enable-caching t)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 ;; Macro Keybindings
 (key-chord-define-global ">>"     'forward-word)
 (key-chord-define-global "<<"     'backward-word)
-
 
 ;; Multi-Cursor Using Key Chord
 (key-chord-mode +1)
@@ -56,6 +57,69 @@
 
 ;; Highlight matching parens
 (show-paren-mode 1)
+
+;; Always show line numbers
+(global-linum-mode t)
+
+;; 4 Digits accounted for with Left Justification
+(setq linum-format "%-4d| ")
+
+;; Beautify Python on save
+(add-hook 'python-mode-hook 'ruff-format-on-save-mode)
+
+
+(defun render-md ()
+    "Renders Markdown in a Window Parallel to the Markdown using the Github API"
+    (interactive)
+    (when (eq major-mode 'markdown-mode)
+      (gh-md-render-buffer)))
+
+(eval-after-load 'markdown
+              (add-hook 'after-save-hook 'render-md))
+
+;; Ubuntu Clipboard
+(defun copy-from-ubuntu ()
+  (interactive)
+  (if (display-graphic-p)
+      (progn
+        (message "Yanked region to x-clipboard!")
+        (call-interactively 'clipboard-kill-ring-save)
+        )
+    (if (region-active-p)
+        (progn
+          (shell-command-on-region (region-beginning) (region-end) "xsel -i -b")
+          (message "Yanked region to clipboard!"))
+      (message "No region active; can't yank to clipboard!")))
+  )
+
+(defun cut-from-ubuntu ()
+  (interactive)
+  (if (display-graphic-p)
+      (progn
+        (message "Yanked region to x-clipboard!")
+        (call-interactively 'clipboard-kill-ring-save)
+        )
+    (if (region-active-p)
+        (progn
+          (shell-command-on-region (region-beginning) (region-end) "xsel -i -b")
+          (delete-region (region-beginning) (region-end))
+          (message "Yanked region to clipboard!"))
+      (message "No region active; can't yank to clipboard!")))
+    )
+
+(defun paste-to-ubuntu ()
+  (interactive)
+  (if (display-graphic-p)
+      (progn
+        (clipboard-yank)
+        (message "graphics active")
+        )
+    (insert (shell-command-to-string "xsel -o -b"))
+    )
+  )
+;;(global-set-key (kbd "C-y") 'paste-to-ubuntu)
+;;(global-set-key (kbd "C-w") 'cut-from-ubuntu)
+;;(global-set-key (kbd "M-w") 'copy-from-ubuntu)
 
 ;; Wrap text
 (global-visual-line-mode 1)
@@ -90,8 +154,23 @@
 
 ;; Yasnippets
 (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-(setq yas/indent-line nil)
 (yas-global-mode 1)
+
+(defun yank-to-clipboard ()
+  "Use ANSI OSC 52 escape sequence to attempt clipboard copy"
+  ;; https://sunaku.github.io/tmux-yank-osc52.html
+  (interactive)
+  (let ((tmx_tty (concat "/dev/" (shell-command-to-string "ps l | grep 'tmux attach' | grep -v grep | awk '{print $11}'")))
+        (base64_text (base64-encode-string (encode-coding-string (substring-no-properties (nth 0 kill-ring)) 'utf-8) t)))
+    ;; Check if inside TMUX
+    (if (getenv "TMUX")
+        (shell-command
+         (format "printf \"\033]52;c;%s\a\" > %s" base64_text tmx_tty))
+      ;; Check if inside SSH
+      (if (getenv "SSH_TTY")
+          (shell-command (format "printf \"\033]52;c;%s\a\" > %s" base64_text (getenv "SSH_TTY")))
+        ;; Send to current TTY
+        (send-string-to-terminal (format "\033]52;c;%s\a" base64_text))))))
 
 ;; Company Abbreviation in the window using dabbrev and Yasnippets search with company
 (add-hook 'after-init-hook 'global-company-mode)
@@ -109,9 +188,12 @@
  '(package-selected-packages
    (quote
     (reason-mode ace-jump-mode magit zenburn-theme xclip web-mode py-yapf projectile prettier-js multiple-cursors key-chord expand-region ensime counsel add-node-modules-path))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
